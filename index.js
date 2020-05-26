@@ -65,3 +65,51 @@ var firstname = 'Krusty';
 // You could have the function not expect an argument and invoke without passing anything in.
 // Summary - when this block of code is run the function is seen and then immediately run.
 // If you do this familyname is not publicly available which may be a security benefit.
+
+// 3) JavaScript Hoisting with Marge and Lisa
+
+//  Scenario A
+
+var lisa = 'Lisa Simpson';
+
+function marge() {
+  console.log('Marge Simpson');
+}
+
+marge();
+console.log(lisa);
+
+// Scenario B
+
+hoistedMarge();
+console.log(hoistedLisa);
+
+var hoistedLisa = 'Hoisted Lisa Simpson';
+
+function hoistedMarge() {
+  console.log('Hoisted Marge Simpson');
+}
+
+// Scenario A behaves in the way most other languages behave.
+// Lisa Simpson is created on line 73.
+// The marge function is created on line 75.
+// On line 79 the marge function is called and returns Marge Simpson
+// On line 80 the lisa variable is logged out displaying Lisa Simpson on the log.
+// Scenario B behaves in a way most other languages do not because of Hoisting.
+// On line 84 hoistedMarge is called BEFORE the hoistedMarge function is created.
+// hoistedMarge still returns 'Hoisted Marge Simpson' because it's been 'Hoisted' by JavaScript
+// JavaScript 'hoists' functions.
+// On line 85 the console.log for lisa returns undefined because JavaScript does not 'hoist' variables.
+// It's worth noting that JavaScript still acknowledges hoistedLisa
+// which is why you get a value (undefined) instead of an error
+// This all happens because of JavaScripts execution context.
+// When JavaScript initially runs a file, it has a 'creation phase'.
+// This is when it goes through all the code and puts the variables and functions into its memory.
+// So it knows the variables and functions are there before it tries to run the JavaScript function.
+// This is the 'hoisting' process.
+// This is why in scenario B it knows about Hoisted Marge.
+// Because before running the file it's already been through the code and stored Hoisted Marge
+// Lisa is undefined because variable values aren't stored in the 'creation phase'.
+// JavaScript knows there's a hoistedLisa variable during the creation phase, but it does not know the value of hoistedLisa until the next phase.
+// The second phase is the execution phase.  This is when the code is executed.
+// At line 85 the variable has not been defined yet which is why it returns undefined.
