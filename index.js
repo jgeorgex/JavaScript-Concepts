@@ -121,3 +121,58 @@ console.log(hoistedLisa);
 // This is why JavaScript returns undefined instead of an error.
 // On line 93 the console.log of hoisted lisa does return 'Lisa Simpson'.
 // Because by this point in the execution phase a value has been set for the variable hoistedLisa.
+
+// 4) JavaScript Prototypes and Inheretance with the Springfiled Mafia
+
+var mafiaMember = {
+  firstname: 'X',
+  lastname: 'X',
+  getFullName: function() {
+    return this.firstname + ' ' + this.lastname;
+  }
+};
+
+var boss = {
+  firstname: 'Tony',
+  lastname: "D'Amico"
+};
+
+boss.__proto__ = mafiaMember;
+console.log(boss.firstname);
+console.log(boss.getFullName());
+
+var johnnyTightlips = {
+  firstname: 'Johnny'
+};
+
+johnnyTightlips.__proto__ = mafiaMember;
+console.log(johnnyTightlips.getFullName());
+
+//  On line 127 the variable mafiaMember is set.
+//  Inside that object it creates firstname and lastname both with the value of X.
+//  it also sets getFullName as a function that returns firstname and lastname.
+//  Nothing has happened at this point its all just in memory.
+//  Next up on line 135 the variable boss is set with the firstname and last name values set.
+//  So you now have two variables set in memory.
+//  On line 140 we set __proto__ on the boss variable to equal mafiaMember.
+//  That means the mafiaMember object is now a prototype of boss.
+//  This is prototype inheritance comes in to play.  This is demonstrated on lines 141 and 142
+//  On line 141 it returns Tony.  That's because firstname exists in boss and has been set to Tony.
+//  On line 142 'Tony D'Amico' is logged out to the console.
+//  Thats because boss.getFullName() means the boss variable is calling the getFullName method and running it.
+//  Whats interesting here is that getFullName doesn't exist in the boss object.
+//  However because on line 140 we made mafiaMember a prototype of boss the JavaScript engine can see mafiaMember.
+//  This is boss inheriting the properties of mafiaMember because it's been set as a prototype.
+//  Kind of similar to how the scope chain works (I think).
+//  On line 144 we create johnnyTightlips with the value for firstname: set to "Johny"
+//  On line 148 we again use __proto__.  This time to set mafiaMember as a prototype for johnnyTightlips.
+//  This means mafiaMember now inherits from johnnyTightlips and boss.
+//  On line 149 johnnyTightlips calls getFullName.
+//  getFullName does not exist in the johnnyTightlips object.
+//  But as we now know because of line 148 the JavaScript engine will look elsewhere including mafiaMember.
+//  In mafiaMember getFullName does exist.  So line 149 returns Johny X.
+//  This is slightly different from the boss example.
+//  In the boss example, it returned the firstname and lastname given in boss.
+//  In the johnyTightlips example, no lastname was set within the johnyTightlips object.
+//  However the inherited object mafiaMember does have a lastname object with a value.
+//  That value is is X, so it uses that which is why line 149 returns Johnny X.
